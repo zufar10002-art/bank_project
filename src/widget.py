@@ -3,7 +3,8 @@
 """
 
 from datetime import datetime
-from .masks import mask_card_number, mask_account_number
+
+from .masks import mask_account_number, mask_card_number
 
 
 def mask_account_card(data_string: str) -> str:
