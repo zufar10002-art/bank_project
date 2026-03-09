@@ -3,8 +3,7 @@
 """
 
 from datetime import datetime
-
-from .masks import mask_account_number, mask_card_number
+from src.masks import mask_card_number, mask_account_number
 
 
 def mask_account_card(data_string: str) -> str:
@@ -15,15 +14,19 @@ def mask_account_card(data_string: str) -> str:
         data_string (str): Строка типа "Visa Platinum 7000792289606361"
 
     Returns:
-        str: Строка с маскированным номером
+        str: Строка с замаскированным номером
     """
     if not data_string:
         return ""
+
     parts = data_string.strip().split()
+
     if len(parts) < 2:
         return data_string
+
     account_type = " ".join(parts[:-1])
     number = parts[-1]
+
     if not number.isdigit():
         return data_string
 
