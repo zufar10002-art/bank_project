@@ -13,12 +13,12 @@ def mask_card_number(card_number: str) -> str:
     """
     if not card_number:
         raise ValueError("Номер карты не может быть пустым")
-    
+
     clean_number = ''.join(filter(str.isdigit, card_number))
-    
+
     if len(clean_number) != 16:
-        raise ValueError(f"Номер карты должен содержать 16 цифр")
-    
+        raise ValueError("Номер карты должен содержать 16 цифр")
+
     return f"{clean_number[:4]} {clean_number[4:6]}** **** {clean_number[-4:]}"
 
 
@@ -34,10 +34,10 @@ def mask_account_number(account_number: str) -> str:
     """
     if not account_number:
         raise ValueError("Номер счета не может быть пустым")
-    
+
     clean_number = ''.join(filter(str.isdigit, account_number))
-    
+
     if len(clean_number) < 4:
         raise ValueError("Номер счета должен содержать минимум 4 цифры")
-    
+
     return f"**{clean_number[-4:]}"

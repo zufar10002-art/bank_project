@@ -3,7 +3,7 @@
 """
 
 from datetime import datetime
-from .masks import mask_card_number, mask_account_number
+from src.masks import mask_card_number, mask_account_number
 
 
 def mask_account_card(data_string: str) -> str:
@@ -14,22 +14,22 @@ def mask_account_card(data_string: str) -> str:
         data_string (str): Строка типа "Visa Platinum 7000792289606361"
 
     Returns:
-        str: Строка с маскированным номером
+        str: Строка с замаскированным номером
     """
     if not data_string:
         return ""
-    
+
     parts = data_string.strip().split()
-    
+
     if len(parts) < 2:
         return data_string
-    
+
     account_type = " ".join(parts[:-1])
     number = parts[-1]
-    
+
     if not number.isdigit():
         return data_string
-    
+
     if account_type.lower() == "счет":
         try:
             masked_number = mask_account_number(number)
@@ -48,7 +48,7 @@ def mask_account_card(data_string: str) -> str:
                 masked_number = f"{number[:4]} **** **** {number[-4:]}"
             else:
                 masked_number = "**** **** **** ****"
-    
+
     return f"{account_type} {masked_number}"
 
 
@@ -64,13 +64,13 @@ def get_date(date_string: str) -> str:
     """
     if not date_string:
         return ""
-    
+
     try:
         if '.' in date_string:
             date_part = date_string.split('.')[0]
         else:
             date_part = date_string
-        
+
         date_obj = datetime.fromisoformat(date_part)
         return date_obj.strftime("%d.%m.%Y")
     except ValueError:
@@ -80,14 +80,14 @@ def get_date(date_string: str) -> str:
             "%Y-%m-%d",
             "%d.%m.%Y"
         ]
-        
+
         for fmt in formats_to_try:
             try:
                 date_obj = datetime.strptime(date_string, fmt)
                 return date_obj.strftime("%d.%m.%Y")
             except ValueError:
                 continue
-        
+
         return date_string
     except Exception:
         return date_string
